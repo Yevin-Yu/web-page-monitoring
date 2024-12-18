@@ -31,9 +31,7 @@ const signIn = function () {
 };
 const signUp = function () {
   signUpView.value.dialogVisible = true;
-  signUpView.value.user.userName = "";
-  signUpView.value.user.password = "";
-  signUpView.value.user.passwordConfirm = "";
+  if(signUpView.value.ruleFormRef) signUpView.value.ruleFormRef.resetFields()
 }
 </script>
 

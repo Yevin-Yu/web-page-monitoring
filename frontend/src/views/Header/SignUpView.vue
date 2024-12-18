@@ -17,7 +17,7 @@
             <div class="sign-btn" @click="getSignUp(ruleFormRef)">注&nbsp;&nbsp;册</div>
           </el-form-item>
         </el-form>
-        
+
       </div>
     </el-dialog>
   </div>
@@ -27,8 +27,8 @@
 import { ref, reactive, defineExpose } from "vue";
 import UserName from "@/assets/images/UserName.vue";
 import Password from "@/assets/images/Password.vue";
-import type { UserInter} from '@/types/userInterface'
-import type { FormInstance,FormRules } from 'element-plus'
+import type { UserInter } from '@/types/userInterface'
+import type { FormInstance, FormRules } from 'element-plus'
 const dialogVisible = ref(false);
 const user = ref<UserInter>({
   userName: "",
@@ -52,7 +52,7 @@ const validatePasswordStrength = (rule: any, value: string, callback: Function) 
   const hasLowercase = /[a-z]/.test(value);
   const hasUppercase = /[A-Z]/.test(value);
   const hasNumbers = /\d/.test(value);
-  const hasSpecialChars = /[!@#$%^&*(),.?":{}|<>]/.test(value); 
+  const hasSpecialChars = /[!@#$%^&*(),.?":{}|<>]/.test(value);
   const conditionsMet = [hasLowercase, hasUppercase, hasNumbers, hasSpecialChars].filter(Boolean).length;
   if (conditionsMet < 3) {
     return callback(new Error('密码必须包含数字、字母大小写、特殊符号中的至少三种'));
@@ -82,7 +82,7 @@ const getSignUp = async (formEl: FormInstance | undefined) => {
     }
   })
 }
-defineExpose({ dialogVisible, user });
+defineExpose({ dialogVisible, user, ruleFormRef });
 </script>
 
 <style lang="less" scoped>
@@ -93,9 +93,11 @@ defineExpose({ dialogVisible, user });
   .sign-in-container {
     width: 250px;
     margin: 20px auto;
-    .el-form-item{
+
+    .el-form-item {
       margin-bottom: 30px;
     }
+
     .el-input__wrapper {
       background: url(@/assets/images/input.png) no-repeat center;
       background-size: 100% 100%;
