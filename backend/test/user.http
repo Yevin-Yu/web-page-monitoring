@@ -3,10 +3,25 @@
 
 
 # 注册
-POST http://localhost:3000/auth/register
+
+# POST http://localhost:3000/auth/register
+# Content-Type: application/json
+
+# {
+#   "email": "te12stexa112@231.2m",
+#   "password": "112323a."
+# }
+
+
+
+
+POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "test@exa112322m1p1le.com",
+  "email": "te12stexa112@231.2m",
   "password": "112323a."
 }
+
+
+

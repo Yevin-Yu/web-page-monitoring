@@ -3,10 +3,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { User } from './user.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])], // 确保这里导入了 User 实体
-  providers: [UserService],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    JwtModule.register({
+      secret: 'A3B7C9D1E2F4G5H8',
+      signOptions: { expiresIn: '604800s' }, // one week
+    }),
+  ],
+  providers: [
+    UserService
+  ],
   controllers: [UserController],
 })
-export class UserModule {}
+export class UserModule { }
