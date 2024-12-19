@@ -1,9 +1,11 @@
-import { Injectable, ConflictException, BadRequestException } from '@nestjs/common';
+import { Injectable, ConflictException, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Code, Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
+
+import { verifyLogin } from '../auth/auth.utils';
 
 @Injectable()
 export class UserService {
@@ -56,5 +58,11 @@ export class UserService {
     return {
       token
     }
+  }
+  // 获取用户信息
+  async getUserInfo(headers: Record<string, string>): Promise<object> {
+    const user = await verifyLogin(headers, this.jwtService, false);
+    // 获取请求头中的 token
+    return user
   }
 }

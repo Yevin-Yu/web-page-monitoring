@@ -1,6 +1,6 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Headers } from '@nestjs/common';
 import { UserService } from './user.service';
-
+import { User } from './user.entity';
 @Controller('auth')
 export class UserController {
   constructor(private readonly userService: UserService) { }
@@ -19,5 +19,13 @@ export class UserController {
     @Body('password') password: string
   ): Promise<object> {
     return this.userService.login(email, password);
+  }
+
+  // 获取用户信息
+  @Post('info')
+  async getUserInfo(
+    @Headers() headers: Record<string, string>
+  ): Promise<object> {
+    return this.userService.getUserInfo(headers);
   }
 }

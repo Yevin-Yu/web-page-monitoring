@@ -15,13 +15,20 @@
 
 
 
-POST http://localhost:3000/auth/login
+
+# POST http://localhost:3000/auth/login
+# Content-Type: application/json
+
+# {
+#   "email": "te12stexa112@231.2m",
+#   "password": "112323a."
+# }
+
+
+# 获取用户信息
+
+POST http://localhost:3000/auth/info
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlMTJzdGV4YTExMkAyMzEuMm0iLCJpZCI6MjMsImlhdCI6MTczNDYxMjA1MCwiZXhwIjoxNzM1MjE2ODUwfQ.yT5JWHaspe5ikbUCAh8m6S0SkmKzzuDjPWiY5YrX0yw
 Content-Type: application/json
-
-{
-  "email": "te12stexa112@231.2m",
-  "password": "112323a."
-}
-
 
 

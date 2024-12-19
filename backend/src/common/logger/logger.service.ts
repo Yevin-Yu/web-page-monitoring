@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
-import { format } from 'winston';
 
 @Injectable()
 export class LoggerService {
