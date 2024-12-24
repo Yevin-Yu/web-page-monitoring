@@ -1,7 +1,3 @@
-
-
-
-
 # 注册
 
 # POST http://localhost:3000/auth/register
@@ -11,9 +7,6 @@
 #   "email": "te12stexa112@231.2m",
 #   "password": "112323a."
 # }
-
-
-
 
 
 # POST http://localhost:3000/auth/login
@@ -27,8 +20,44 @@
 
 # 获取用户信息
 
-POST http://localhost:3000/auth/info
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlMTJzdGV4YTExMkAyMzEuMm0iLCJpZCI6MjMsImlhdCI6MTczNDYxMjA1MCwiZXhwIjoxNzM1MjE2ODUwfQ.yT5JWHaspe5ikbUCAh8m6S0SkmKzzuDjPWiY5YrX0yw
+# POST http://localhost:3000/auth/info
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlMTJzdGV4YTExMkAyMzEuMm0iLCJpZCI6MjMsImlhdCI6MTczNDYxMjA1MCwiZXhwIjoxNzM1MjE2ODUwfQ.yT5JWHaspe5ikbUCAh8m6S0SkmKzzuDjPWiY5YrX0yw
+# Content-Type: application/json
+
+# 新增keyCode
+
+# POST http://localhost:3000/keycode/create
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlMTJzdGV4YTExMkAyMzEuMm0iLCJpZCI6MjMsImlhdCI6MTczNTAzMDg0MywiZXhwIjoxNzM1NjM1NjQzfQ.kWNz0wQVEy-qRDbk8GxJNT46ba1X4P_56toAr0Fa5LU
+
+# {
+#   "name":"耶温导航页"
+# }
+
+# 获取keyCode
+
+# GET http://localhost:3000/keycode/list
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlMTJzdGV4YTExMkAyMzEuMm0iLCJpZCI6MjMsImlhdCI6MTczNTAzMDg0MywiZXhwIjoxNzM1NjM1NjQzfQ.kWNz0wQVEy-qRDbk8GxJNT46ba1X4P_56toAr0Fa5LU
+
+# 修改keyCode
+
+# POST http://localhost:3000/keycode/update
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlMTJzdGV4YTExMkAyMzEuMm0iLCJpZCI6MjMsImlhdCI6MTczNTAzMDg0MywiZXhwIjoxNzM1NjM1NjQzfQ.kWNz0wQVEy-qRDbk8GxJNT46ba1X4P_56toAr0Fa5LU
+
+# {
+#   "id": 7,
+#   "name": "耶温导航页2",
+#   "is_active":false
+# }
+
+# 删除keyCode
+
+POST http://localhost:3000/keycode/delete
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlMTJzdGV4YTExMkAyMzEuMm0iLCJpZCI6MjMsImlhdCI6MTczNTAzMDg0MywiZXhwIjoxNzM1NjM1NjQzfQ.kWNz0wQVEy-qRDbk8GxJNT46ba1X4P_56toAr0Fa5LU
 
-
+{
+  "id": 6
+}

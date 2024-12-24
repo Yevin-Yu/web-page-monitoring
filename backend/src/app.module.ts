@@ -12,6 +12,7 @@ import { LoggerMiddleware } from './common/logger/logger.middleware';
 // 用户模块
 import { UserModule } from './users/user.module';
 import { JwtModule } from '@nestjs/jwt';
+import { KeyCodeModule } from './key-code/key-code.module';
 @Module({
   imports: [
     // env配置
@@ -41,7 +42,8 @@ import { JwtModule } from '@nestjs/jwt';
       }),
       inject: [ConfigService], // 注入 ConfigService
     }),
-    UserModule, // 引入用户模块
+    UserModule,
+    KeyCodeModule, // 引入用户模块
   ],
   providers: [
     {
