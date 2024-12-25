@@ -1,42 +1,20 @@
 <template>
   <div>
-    <el-dialog
-      v-model="dialogVisible"
-      width="350px"
-      top="35vh"
-      :show-close="false"
-    >
+    <el-dialog v-model="dialogVisible" width="350px" top="35vh" :show-close="false">
       <div class="sign-in-container">
         <el-form>
           <el-form-item>
-            <el-input
-              placeholder="请输入账号"
-              :prefix-icon="UserName"
-              v-model="user.userName"
-            ></el-input>
+            <el-input placeholder="请输入账号" :prefix-icon="UserName" v-model="user.userName"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input
-              placeholder="请输入密码"
-              :prefix-icon="Password"
-              show-password
-              v-model="user.password"
-            ></el-input>
+            <el-input placeholder="请输入密码" :prefix-icon="Password" show-password v-model="user.password"></el-input>
           </el-form-item>
         </el-form>
         <div class="remember-pwd">
           <div class="pwd-ckeckbox" @click="getRememberPwd">
-            <img
-              src="../../assets/images/checkbox.png"
-              alt=""
-              class="checkbox-rect"
-            />
-            <img
-              src="../../assets/images/confirm.png"
-              alt=""
-              class="checkbox-confirm"
-              v-if="rememberPwdStore.rememberPwd"
-            />
+            <img src="../../assets/images/checkbox.png" alt="" class="checkbox-rect" />
+            <img src="../../assets/images/confirm.png" alt="" class="checkbox-confirm"
+              v-if="rememberPwdStore.rememberPwd" />
           </div>
           <span>记住密码</span>
         </div>
@@ -51,7 +29,10 @@ import { ref, defineExpose, onMounted } from "vue";
 import UserName from "@/assets/images/UserName.vue";
 import Password from "@/assets/images/Password.vue";
 import { useRememberPwd } from "@/stores/counter.ts";
-import type { UserInter} from '@/types/userInterface'
+import type { UserInter } from '@/types/userInterface'
+import { login } from '@/api/login'
+import { ElMessage } from 'element-plus'
+import { setToken } from "@/utils/token";
 const rememberPwdStore = useRememberPwd();
 const dialogVisible = ref(false);
 const user = ref<UserInter>({
@@ -69,8 +50,22 @@ const getRememberPwd = function () {
   }
 };
 const getSignIn = function () {
-  console.log("登录");
-  dialogVisible.value = false;
+  login({
+    email: user.value.userName,
+    password: user.value.password,
+  }).then(res => {
+    if (res.data.code) {
+      setToken(res.data.data.token)
+      rememberPwdStore.token = res.data.data.token
+      ElMessage.success('登录成功')
+    } else {
+      ElMessage.error('登录失败')
+    }
+  }).catch(() => {
+    ElMessage.error('登录失败')
+  }).finally(() => {
+    dialogVisible.value = false
+  })
 };
 onMounted(() => {
   if (rememberPwdStore.rememberPwd) {
@@ -85,25 +80,30 @@ defineExpose({ dialogVisible, user });
 :deep(.el-dialog) {
   background: url(@/assets/images/signIn.png) no-repeat center;
   background-size: 100% 100%;
+
   .sign-in-container {
     width: 250px;
     margin: 20px auto;
+
     .el-input__wrapper {
       background: url(@/assets/images/input.png) no-repeat center;
       background-size: 100% 100%;
-      box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color))
-        inset;
+      box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color)) inset;
+
       .el-input__inner {
         color: #fff;
       }
     }
+
     .remember-pwd {
       display: flex;
       justify-content: end;
       align-items: center;
+
       .pwd-ckeckbox {
         position: relative;
         cursor: pointer;
+
         .checkbox-rect,
         .checkbox-confirm {
           position: absolute;
@@ -112,11 +112,13 @@ defineExpose({ dialogVisible, user });
           left: -20px;
         }
       }
+
       span {
         font-size: 12px;
         color: #00fcff;
       }
     }
+
     .sign-btn {
       width: 180px;
       height: 30px;

@@ -4,7 +4,7 @@
       <div class="sign-in-container">
         <el-form ref="ruleFormRef" :rules="rules" :model="user">
           <el-form-item prop="userName">
-            <el-input placeholder="请输入账号" :prefix-icon="UserName" v-model="user.userName"></el-input>
+            <el-input placeholder="请输入邮箱账号" :prefix-icon="UserName" v-model="user.userName"></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input placeholder="请输入密码" :prefix-icon="Password" show-password v-model="user.password"></el-input>
@@ -29,6 +29,8 @@ import UserName from "@/assets/images/UserName.vue";
 import Password from "@/assets/images/Password.vue";
 import type { UserInter } from '@/types/userInterface'
 import type { FormInstance, FormRules } from 'element-plus'
+import { register } from '@/api/login'
+import { ElMessage } from 'element-plus'
 const dialogVisible = ref(false);
 const user = ref<UserInter>({
   userName: "",
@@ -61,8 +63,8 @@ const validatePasswordStrength = (rule: any, value: string, callback: Function) 
 };
 const rules = reactive<FormRules<UserInter>>({
   userName: [
-    { required: true, message: '请输入账号名称', trigger: 'blur' },
-    { min: 3, max: 20, message: '长度控制在3到20个字符之间', trigger: 'blur' },
+    { required: true, message: '请输入邮箱账号', trigger: 'blur' },
+    { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] },
   ],
   password: [
     { validator: validatePasswordStrength, trigger: 'blur' },
@@ -76,9 +78,19 @@ const getSignUp = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('注册成功!')
+      register({email:user.value.userName, password:user.value.password}).then(res=>{
+        if(res.data.code){
+          ElMessage.success(res.data.data)
+        }else{
+          ElMessage.error('注册失败')
+        }
+      }).catch(()=>{
+        ElMessage.error('注册失败')
+      }).finally(()=>{
+        dialogVisible.value = false
+      })
     } else {
-      console.log('请按照要求填写必填项', fields)
+      ElMessage.error('请按照要求填写必填项')
     }
   })
 }

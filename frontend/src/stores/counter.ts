@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import type { UserInter} from '@/types/userInterface'
+import type { UserInter } from "@/types/userInterface";
 export const useCounterStore = defineStore("counter", () => {
   const count = ref(0);
   const doubleCount = computed(() => count.value * 2);
@@ -17,5 +17,6 @@ export const useRememberPwd = defineStore("rememberPwd", () => {
     userName: "",
     password: "",
   });
-  return { rememberPwd, userInfo };
+  const token = ref<string>("");
+  return { rememberPwd, userInfo, token };
 });

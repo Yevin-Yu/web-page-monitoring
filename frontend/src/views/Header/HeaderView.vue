@@ -1,6 +1,6 @@
 <template>
   <header>
-    <span class="title">数据可视化</span>
+    <span class="title">前端统计分析平台</span>
     <div class="login">
       <span class="sign-in" @click="signIn">登录</span>
       <span @click="signUp">注册</span>
