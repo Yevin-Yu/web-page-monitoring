@@ -26,11 +26,9 @@ import mainLogo from '@/assets/images/mainLogo.vue';
   background-size: 58% 73%;
   display: flex;
   justify-content: end;
-
+  align-items: center;
   .main-content {
-    padding-top: 100px;
     width: 50%;
-    height: 100%;
     background: linear-gradient(45deg, #19ECFF, #fff);
     -webkit-background-clip: text;
     background-clip: text;
