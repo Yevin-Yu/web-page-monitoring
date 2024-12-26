@@ -2,6 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PageView } from './page-view.entity';
+import axios from 'axios';
 
 @Injectable()
 export class PageViewService {
@@ -67,11 +68,13 @@ export class PageViewService {
         pageView.user_agent
       ]
     );
+    //异步 根据ip 调用ip地址查询接口获取地区 不影响插入数据和返回数据
+    this.insertIpLocation(pageView.ip, tableName, pageView.visitor_id)
     return '数据已保存'
   }
 
   // 更新页面访问时间
-  async updatePageViewTime(visitor_id: string, code: string, close_time: string): Promise<string> {
+  async updatePageViewTime(code: string, visitor_id: string, close_time: string): Promise<string> {
     if (!code) {
       throw new BadRequestException('keyCode错误');
     }
@@ -99,13 +102,26 @@ export class PageViewService {
     )
     // 获取数据时间 减去 当前时间 /秒
     const duration = Math.floor((new Date(close_time).getTime() - new Date(data[0].visit_time).getTime()) / 1000)
-
     // 更新数据到动态表
     await this.pageViewRepository.query(
       `UPDATE ${tableName} SET visit_duration = ?,close_time=? WHERE visitor_id = ?`,
       [duration, close_time, visitor_id]
     )
-
     return '数据已更新'
+  }
+
+  // 根据ip获取地区位置插入到数据库
+  async insertIpLocation(ip: string, tableName: string, visitor_id: string) {
+    // 查看ip格式是否正确
+    if (ip && /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) {
+      // 查询ip地址
+      const response = await axios.get(`http://ip-api.com/json/${ip}`);
+      const region = response?.data?.city + '-' + response?.data?.regionName + '-' + response?.data?.country
+      // 更新数据到动态表
+      await this.pageViewRepository.query(
+        `UPDATE ${tableName} SET region = ? WHERE visitor_id = ?`,
+        [region, visitor_id]
+      )
+    }
   }
 }
