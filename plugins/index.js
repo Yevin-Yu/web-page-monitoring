@@ -3,6 +3,7 @@
     const scriptSrc = document.currentScript.src;
     const urlParams = new URLSearchParams(scriptSrc.split('?')[1]);
     const key = urlParams.get('key');
+    const API = 'http://localhost:3001/api/page-view/'
 
     const Analytics = {
         init: function () {
@@ -23,22 +24,14 @@
                 visit_time: convertTime(new Date()),
                 user_agent: navigator.userAgent,
             };
-            console.log(pageViewData)
             // 发送请求到服务器
-            fetch('http://localhost:3001/page-view', {
+            fetch(API, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(pageViewData),
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
 
         },
         // 更新浏览时间
@@ -50,21 +43,21 @@
                 visitor_id,
                 close_time,
             };
-            console.log(updateVisitTimeData)
-            
-            navigator.sendBeacon('http://localhost:3001/page-view/update', JSON.stringify(updateVisitTimeData));
+            // 发送请求到服务器
+            navigator.sendBeacon(API + 'update', JSON.stringify(updateVisitTimeData));
         }
     };
-    // 监听页面关闭事件 
-    window.addEventListener('beforeunload', () => {
-        Analytics.updateVisitTime();
-    })
+
 
     // 初始化插件
     document.addEventListener('DOMContentLoaded', () => {
         Analytics.init();
     });
 
+    // 监听页面关闭事件 
+    window.addEventListener('beforeunload', () => {
+        Analytics.updateVisitTime();
+    })
 
     // 转换时间
     function convertTime(time) {
