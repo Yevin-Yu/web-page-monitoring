@@ -3,8 +3,8 @@
     <el-dialog v-model="dialogVisible" width="350px" top="35vh" :show-close="false">
       <div class="sign-in-container">
         <el-form ref="ruleFormRef" :rules="rules" :model="user">
-          <el-form-item prop="userName">
-            <el-input placeholder="请输入邮箱账号" :prefix-icon="UserName" v-model="user.userName"></el-input>
+          <el-form-item prop="email">
+            <el-input placeholder="请输入邮箱账号" :prefix-icon="UserName" v-model="user.email"></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input placeholder="请输入密码" :prefix-icon="Password" show-password v-model="user.password"></el-input>
@@ -14,7 +14,8 @@
               v-model="user.passwordConfirm"></el-input>
           </el-form-item>
           <el-form-item>
-            <div class="sign-btn" @click="getSignUp(ruleFormRef)">注&nbsp;&nbsp;册</div>
+            <div class="sign-btn" @click="getSignUp(ruleFormRef)" v-loading="submitLoading"
+            element-loading-background="rgba(0,8,22, 0.8)">注&nbsp;&nbsp;册</div>
           </el-form-item>
         </el-form>
 
@@ -33,7 +34,7 @@ import { register } from '@/api/login'
 import { ElMessage } from 'element-plus'
 const dialogVisible = ref(false);
 const user = ref<UserInter>({
-  userName: "",
+  email: "",
   password: "",
   passwordConfirm: '',
 });
@@ -62,7 +63,7 @@ const validatePasswordStrength = (rule: any, value: string, callback: Function) 
   callback();
 };
 const rules = reactive<FormRules<UserInter>>({
-  userName: [
+  email: [
     { required: true, message: '请输入邮箱账号', trigger: 'blur' },
     { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] },
   ],
@@ -74,11 +75,13 @@ const rules = reactive<FormRules<UserInter>>({
     { validator: validatePass, trigger: 'blur' }
   ],
 })
+const submitLoading = ref<boolean>(false)
 const getSignUp = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      register({email:user.value.userName, password:user.value.password}).then(res=>{
+      submitLoading.value = true
+      register({email:user.value.email, password:user.value.password}).then(res=>{
         if(res.data.code){
           ElMessage.success(res.data.data)
         }else{
@@ -87,6 +90,7 @@ const getSignUp = async (formEl: FormInstance | undefined) => {
       }).catch(()=>{
         ElMessage.error('注册失败')
       }).finally(()=>{
+        submitLoading.value = false
         dialogVisible.value = false
       })
     } else {

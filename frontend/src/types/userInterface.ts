@@ -1,5 +1,6 @@
 export interface UserInter { 
-  userName:string, 
+  email:string,
+  userName?:string, 
   password:string,
   passwordConfirm?:string
 }

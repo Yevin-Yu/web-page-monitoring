@@ -11,12 +11,27 @@ export const useCounterStore = defineStore("counter", () => {
   return { count, doubleCount, increment };
 });
 
-export const useRememberPwd = defineStore("rememberPwd", () => {
+export const useUserInfo = defineStore("rememberPwd", () => {
   const rememberPwd = ref<boolean>(false);
   const userInfo = ref<UserInter>({
-    userName: "",
+    email: "",
     password: "",
   });
   const token = ref<string>("");
-  return { rememberPwd, userInfo, token };
+  const isLogin = ref<boolean>(false);
+  function setUserInfo(info: UserInter, rememberPwd: boolean) {
+    window.localStorage.setItem("userInfo", JSON.stringify(info));
+    window.localStorage.setItem("rememberPwd", JSON.stringify(rememberPwd));
+  }
+  function getUserInfo() {
+    const info = window.localStorage.getItem("userInfo");
+    const remember = window.localStorage.getItem("rememberPwd");
+    if (remember) {
+      if (info) {
+        userInfo.value = JSON.parse(info);
+      }
+      rememberPwd.value = JSON.parse(remember);
+    }
+  }
+  return { rememberPwd, userInfo, token, isLogin, setUserInfo, getUserInfo };
 });
