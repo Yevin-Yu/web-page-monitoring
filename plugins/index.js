@@ -3,7 +3,7 @@
     const scriptSrc = document.currentScript.src;
     const urlParams = new URLSearchParams(scriptSrc.split('?')[1]);
     const key = urlParams.get('key');
-    const API = 'http://localhost:3001/api/page-view/'
+    const API = 'https://tj.yuwb.cn/api/page-view/'
 
     const Analytics = {
         init: function () {
@@ -53,7 +53,11 @@
     document.addEventListener('DOMContentLoaded', () => {
         Analytics.init();
     });
-
+    // 如果插件在其他情况下被加载，可以直接调用
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        Analytics.init();
+    }
+    
     // 监听页面关闭事件 
     window.addEventListener('beforeunload', () => {
         Analytics.updateVisitTime();
