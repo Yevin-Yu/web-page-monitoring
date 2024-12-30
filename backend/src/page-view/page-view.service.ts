@@ -118,13 +118,17 @@ export class PageViewService {
     // 查看ip格式是否正确
     if (ip && /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) {
       // 查询ip地址
-      const response = await axios.get(`http://ip-api.com/json/${ip}`);
-      const region = response?.data?.city + '-' + response?.data?.regionName + '-' + response?.data?.country
-      // 更新数据到动态表
-      await this.pageViewRepository.query(
-        `UPDATE ${tableName} SET region = ? WHERE visitor_id = ?`,
-        [region, visitor_id]
-      )
+      try {
+        const response = await axios.get(`http://ip-api.com/json/${ip}`);
+        const region = response?.data?.city + '-' + response?.data?.regionName + '-' + response?.data?.country
+        // 更新数据到动态表
+        await this.pageViewRepository.query(
+          `UPDATE ${tableName} SET region = ? WHERE visitor_id = ?`,
+          [region, visitor_id]
+        )
+      } catch (error) {
+        console.error('Error fetching IP location');
+      }
     }
   }
 
