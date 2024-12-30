@@ -1,15 +1,24 @@
 <template>
-  <header>
-    <span class="title">前端统计分析平台</span>
-    <div class="login" v-if="!isLogin">
-      <span class="sign-in" @click="signIn">登录</span>
-      <span @click="signUp">注册</span>
+  <div>
+    <div class="not-login" v-if="!isLogin">
+      <span class="title">前端统计分析平台</span>
+      <div class="login">
+        <span class="sign-in" @click="signIn">登录</span>
+        <span @click="signUp">注册</span>
+      </div>
     </div>
-    <div class="login" v-else>
-      <span class="sign-in">用户名</span>
-      <span @click="logOut">退出登录</span>
+    <div class="is-login" v-else>
+      <span class="title">前端统计分析平台</span>
+      <el-dropdown placement="bottom">
+        <div class="user-info">{{ rememberPwdStore.userInfo.email ? rememberPwdStore.userInfo.email[0] : '' }}</div>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
-  </header>
+  </div>
   <SignInView ref="signInView" />
   <SignUpView ref="signUpView" />
 </template>
@@ -21,6 +30,8 @@ import { ref } from "vue";
 import { useUserInfo } from "@/stores/counter.ts";
 import useLogin from '@/hooks/useLogin'
 import { removeToken } from "@/utils/token";
+import { useRouter } from 'vue-router';
+const router = useRouter();
 let { isLogin } = useLogin()
 const rememberPwdStore = useUserInfo();
 
@@ -29,10 +40,10 @@ const signUpView = ref();
 const signIn = function () {
   signInView.value.dialogVisible = true;
   if (rememberPwdStore.rememberPwd) {
-    signInView.value.user.userName = rememberPwdStore.userInfo.userName;
+    signInView.value.user.email = rememberPwdStore.userInfo.email;
     signInView.value.user.password = rememberPwdStore.userInfo.password;
   } else {
-    signInView.value.user.userName = "";
+    signInView.value.user.email = "";
     signInView.value.user.password = "";
   }
 };
@@ -44,11 +55,12 @@ const logOut = function () {
   rememberPwdStore.isLogin = false
   rememberPwdStore.token = ''
   removeToken()
+  router.push('/guest');
 }
 </script>
 
 <style lang="less" scoped>
-header {
+.not-login {
   width: 100%;
   height: 60px;
   background: url(@/assets/images/title.png) no-repeat center;
@@ -78,6 +90,33 @@ header {
     span:hover {
       color: #00b498;
     }
+  }
+}
+
+.is-login {
+  width: 100%;
+  height: 60px;
+  background-color: #00325c;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    color: #fff;
+    font-size: 1.5rem;
+    padding-left: 30px;
+  }
+
+  .user-info {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin-right: 60px;
+    text-align: center;
+    line-height: 30px;
+    color: #00325c;
+    cursor: pointer;
   }
 }
 </style>

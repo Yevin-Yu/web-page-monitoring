@@ -21,7 +21,7 @@ export default function () {
         isLogin.value = false;
       }
     },
-    { deep: true }
+    { deep: true, immediate: true }
   );
-  return {isLogin}
+  return { isLogin };
 }

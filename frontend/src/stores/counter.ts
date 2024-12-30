@@ -1,5 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import { getToken } from "@/utils/token";
 import type { UserInter } from "@/types/userInterface";
 export const useCounterStore = defineStore("counter", () => {
   const count = ref(0);
@@ -17,8 +18,8 @@ export const useUserInfo = defineStore("rememberPwd", () => {
     email: "",
     password: "",
   });
-  const token = ref<string>("");
-  const isLogin = ref<boolean>(false);
+  const token = getToken();
+  const isLogin = ref<boolean>(token ? true : false);
   function setUserInfo(info: UserInter, rememberPwd: boolean) {
     window.localStorage.setItem("userInfo", JSON.stringify(info));
     window.localStorage.setItem("rememberPwd", JSON.stringify(rememberPwd));

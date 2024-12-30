@@ -17,7 +17,7 @@
           </div>
           <span>记住密码</span>
         </div>
-        <div class="sign-btn" @click="getSignIn" v-loading="loginLoading"
+        <div class="sign-btn over-all-btn" @click="getSignIn" v-loading="loginLoading"
           element-loading-background="rgba(0,8,22, 0.8)">登&nbsp;&nbsp;录</div>
       </div>
     </el-dialog>
@@ -33,6 +33,8 @@ import type { UserInter } from '@/types/userInterface'
 import { login } from '@/api/login'
 import { ElMessage } from 'element-plus'
 import { setToken } from "@/utils/token";
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const userInfoStore = useUserInfo();
 const dialogVisible = ref(false);
 const user = ref<UserInter>({
@@ -55,6 +57,7 @@ const getSignIn = function () {
       userInfoStore.token = res.data.data.token
       userInfoStore.isLogin = true
       ElMessage.success('登录成功')
+      router.push('/workbench');
     } else {
       userInfoStore.isLogin = false
       ElMessage.error('登录失败')
@@ -86,23 +89,9 @@ defineExpose({ dialogVisible, user });
 
 <style lang="less" scoped>
 :deep(.el-dialog) {
-  background: url(@/assets/images/signIn.png) no-repeat center;
-  background-size: 100% 100%;
-
   .sign-in-container {
     width: 250px;
     margin: 20px auto;
-
-    .el-input__wrapper {
-      background: url(@/assets/images/input.png) no-repeat center;
-      background-size: 100% 100%;
-      box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color)) inset;
-
-      .el-input__inner {
-        color: #fff;
-      }
-    }
-
     .remember-pwd {
       display: flex;
       justify-content: end;
@@ -131,9 +120,6 @@ defineExpose({ dialogVisible, user });
       width: 180px;
       height: 30px;
       margin: 20px auto 40px;
-      background: url(@/assets/images/signbtn.png) no-repeat center;
-      background-size: 100% 100%;
-      text-align: center;
       line-height: 30px;
       color: #fff;
       font-size: 16px;

@@ -7,6 +7,23 @@
   background: #000816;
   overflow: auto;
 }
+.el-dialog {
+  background: url(@/assets/images/signIn.png) no-repeat center !important;
+  background-size: 100% 100% !important;
+}
+.el-input__wrapper {
+  background: url(@/assets/images/input.png) no-repeat center !important;
+  background-size: 100% 100% !important;
+  box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color)) inset !important;
+}
+.el-input__inner {
+  color: #fff !important;
+}
+.over-all-btn{
+  background: url(@/assets/images/signbtn.png) no-repeat center;
+  background-size: 100% 100%;
+  text-align: center;
+}
 
 @media (hover: hover) {
   a:hover {

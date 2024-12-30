@@ -14,7 +14,7 @@
               v-model="user.passwordConfirm"></el-input>
           </el-form-item>
           <el-form-item>
-            <div class="sign-btn" @click="getSignUp(ruleFormRef)" v-loading="submitLoading"
+            <div class="sign-btn over-all-btn" @click="getSignUp(ruleFormRef)" v-loading="submitLoading"
             element-loading-background="rgba(0,8,22, 0.8)">注&nbsp;&nbsp;册</div>
           </el-form-item>
         </el-form>
@@ -103,9 +103,6 @@ defineExpose({ dialogVisible, user, ruleFormRef });
 
 <style lang="less" scoped>
 :deep(.el-dialog) {
-  background: url(@/assets/images/signIn.png) no-repeat center;
-  background-size: 100% 100%;
-
   .sign-in-container {
     width: 250px;
     margin: 20px auto;
@@ -113,17 +110,6 @@ defineExpose({ dialogVisible, user, ruleFormRef });
     .el-form-item {
       margin-bottom: 30px;
     }
-
-    .el-input__wrapper {
-      background: url(@/assets/images/input.png) no-repeat center;
-      background-size: 100% 100%;
-      box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color)) inset;
-
-      .el-input__inner {
-        color: #fff;
-      }
-    }
-
     .remember-pwd {
       display: flex;
       justify-content: end;
@@ -152,9 +138,6 @@ defineExpose({ dialogVisible, user, ruleFormRef });
       width: 180px;
       height: 30px;
       margin: 40px auto;
-      background: url(@/assets/images/signbtn.png) no-repeat center;
-      background-size: 100% 100%;
-      text-align: center;
       line-height: 30px;
       color: #fff;
       font-size: 16px;
