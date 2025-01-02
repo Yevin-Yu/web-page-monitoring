@@ -24,7 +24,7 @@ export class PageViewService {
       `SELECT COUNT(*) as count FROM key_code WHERE code = ?`,
       [pageView.code]
     );
-    if (!codeExists[0].count) {
+    if (codeExists[0].count === '0') {
       throw new BadRequestException('keyCode错误');
     }
     // 检查是否存在pageView.code的表
@@ -86,7 +86,7 @@ export class PageViewService {
       `SELECT COUNT(*) as count FROM key_code WHERE code = ?`,
       [code]
     );
-    if (!codeExists[0].count) {
+    if (codeExists[0].count === '0') {
       throw new BadRequestException('keyCode错误');
     }
     // 检查是否存在pageView.code的表
@@ -145,7 +145,7 @@ export class PageViewService {
       `SELECT COUNT(*) as count FROM key_code WHERE code = ?`,
       [code]
     );
-    if (!codeExists[0].count) {
+    if (codeExists[0].count === '0') {
       throw new BadRequestException('keyCode错误');
     }
     // 检查是否存在pageView.code的表
