@@ -139,9 +139,7 @@ defineExpose({ dialogVisible, user, ruleFormRef });
       height: 30px;
       margin: 40px auto;
       line-height: 30px;
-      color: #fff;
       font-size: 16px;
-      cursor: pointer;
     }
   }
 }

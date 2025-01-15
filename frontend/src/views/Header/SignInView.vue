@@ -121,9 +121,7 @@ defineExpose({ dialogVisible, user });
       height: 30px;
       margin: 20px auto 40px;
       line-height: 30px;
-      color: #fff;
       font-size: 16px;
-      cursor: pointer;
     }
   }
 }
