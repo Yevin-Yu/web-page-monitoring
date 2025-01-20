@@ -19,6 +19,30 @@
 .el-input__inner {
   color: #fff !important;
 }
+.el-table thead{
+  color: var(--cus-dark-light-text-color) !important;
+}
+.el-pager li.is-active, .el-pager li:hover {
+  color: var(--cus-dark-light-text-color) !important;
+}
+.el-table {
+  --el-table-row-hover-bg-color: #4e5a70 !important;
+}
+.el-button{
+  --el-button-hover-text-color:var(--cus-dark-light-bg) !important;
+  /* --el-button-hover-bg-color:var(--cus-dark-light-bg) !important; */
+}
+.el-button--primary{
+  --el-button-bg-color:var(--cus-primary-color) !important;
+  --el-button-border-color:var(--cus-primary-color) !important;
+  --el-button-hover-bg-color:var(--cus-dark-light-bg) !important;
+  --el-button-hover-border-color:var(--cus-dark-light-bg) !important;
+  --el-button-hover-text-color:#fff !important;
+}
+.is-link{
+  --el-button-text-color: var(--cus-dark-light-text-color) !important;
+  --el-button-hover-link-text-color:var(--cus-dark-light-bg) !important;
+}
 .over-all-btn{
   background: url(@/assets/images/signbtn.png) no-repeat center;
   background-size: 100% 100%;
