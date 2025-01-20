@@ -1,5 +1,5 @@
 <template>
-  <el-menu active-text-color="#19ECFF" background-color="#00325C" class="el-menu-vertical-demo"
+  <el-menu active-text-color="#19ECFF" background-color="#283243" class="el-menu-vertical-demo"
     :default-active="activeIndex" text-color="#fff">
     <template v-for="item in menuList" :key="item.menuId">
       <!-- 如果有子菜单 -->

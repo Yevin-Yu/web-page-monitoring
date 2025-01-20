@@ -28,9 +28,9 @@ router.beforeEach((to, from, next) => {
   const authRequired = !publicPages.includes(to.path);
   // 获取登录状态
   let { isLogin } = useLogin();
-  if (authRequired && !isLogin) {
+  if (authRequired && !isLogin.value) {
     next("/guest");
-  } else if (to.path === "/" && isLogin) {
+  } else if (to.path === "/" && isLogin.value) {
     next("/workbench");
   } else {
     next();

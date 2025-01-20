@@ -1,6 +1,6 @@
 <template>
   <div class="project-manage">
-    <div class="over-all-btn application-code">申请code</div>
+    <div class="over-all-btn application-code" @click="applyCode">申请code</div>
     <el-table :data="tableData" style="width: 100%" class="code-table">
       <el-table-column prop="date" label="Date" width="180" />
       <el-table-column prop="name" label="Name" width="180" />
@@ -180,6 +180,9 @@ const tableData = [
     address: 'No. 189, Grove St, Los Angeles',
   },
 ]
+const applyCode=function(){
+  
+}
 const handleSizeChange = (val: number) => {
   console.log(`${val} items per page`)
 }

@@ -13,7 +13,8 @@ import {
   Menu as IconMenu,
   Location,
   Setting,
-} from "@element-plus/icons-vue"; 
+} from "@element-plus/icons-vue";
+import zhCn from "element-plus/es/locale/lang/zh-cn";
 
 const app = createApp(App);
 app.component("Document", Document);
@@ -21,7 +22,8 @@ app.component("Menu", IconMenu);
 app.component("Setting", Setting);
 app.component("Location", Location);
 app.use(createPinia());
-app.use(ElementPlus);
+app.use(ElementPlus, {
+  locale: zhCn,
+});
 app.use(router);
-
 app.mount("#app");

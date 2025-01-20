@@ -96,7 +96,7 @@ const logOut = function () {
 .is-login {
   width: 100%;
   height: 60px;
-  background-color: #00325c;
+  background-color: #283243;
   display: flex;
   justify-content: space-between;
   align-items: center;
