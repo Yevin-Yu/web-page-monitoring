@@ -15,7 +15,7 @@ import {
   Setting,
 } from "@element-plus/icons-vue";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
-
+import dateFormatPlugin from './utils/dateFormatPlugin';
 const app = createApp(App);
 app.component("Document", Document);
 app.component("Menu", IconMenu);
@@ -26,4 +26,5 @@ app.use(ElementPlus, {
   locale: zhCn,
 });
 app.use(router);
+app.use(dateFormatPlugin);
 app.mount("#app");
