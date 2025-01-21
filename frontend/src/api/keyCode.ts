@@ -1,8 +1,15 @@
 import request from "@/utils/request";
 interface keyCodeName {
-  id?:number;
+  id?: number;
   name?: string;
-  is_active?:boolean;
+  is_active?: boolean;
+}
+
+interface HisInter {
+  code: string;
+  page_index?: number;
+  page_size?: number;
+  visitor_id?: string;
 }
 
 // 新增
@@ -44,6 +51,30 @@ export function editKeyCode(data: keyCodeName) {
 export function deleteKeyCode(data: keyCodeName) {
   return request({
     url: "/keycode/delete",
+    headers: {
+      isToken: true,
+    },
+    method: "post",
+    data: data,
+  });
+}
+
+// 获取浏览列表
+export function getHistory(data: HisInter) {
+  return request({
+    url: "/page-view/list",
+    headers: {
+      isToken: true,
+    },
+    method: "post",
+    data: data,
+  });
+}
+
+// 删除浏览记录
+export function deleteHistory(data: HisInter) {
+  return request({
+    url: "/page-view/delete",
     headers: {
       isToken: true,
     },

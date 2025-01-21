@@ -57,6 +57,8 @@ const getSignIn = function () {
       userInfoStore.token = res.data.data.token
       userInfoStore.isLogin = true
       ElMessage.success('登录成功')
+      if (isRememberPwd.value) userInfoStore.setUserInfo(user.value, true)
+      emit('refresh-header',user.value)
       router.push('/workbench');
     } else {
       userInfoStore.isLogin = false
@@ -69,6 +71,7 @@ const getSignIn = function () {
     dialogVisible.value = false
   })
 };
+const emit = defineEmits(['refresh-header'])
 onMounted(() => {
   userInfoStore.getUserInfo()
   isRememberPwd.value = userInfoStore.rememberPwd
@@ -92,6 +95,7 @@ defineExpose({ dialogVisible, user });
   .sign-in-container {
     width: 250px;
     margin: 20px auto;
+
     .remember-pwd {
       display: flex;
       justify-content: end;

@@ -10,7 +10,7 @@
     <div class="is-login" v-else>
       <span class="title">前端统计分析平台</span>
       <el-dropdown placement="bottom">
-        <div class="user-info">{{ rememberPwdStore.userInfo.email ? rememberPwdStore.userInfo.email[0] : '' }}</div>
+        <div class="user-info">{{ userName }}</div>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
@@ -19,24 +19,28 @@
       </el-dropdown>
     </div>
   </div>
-  <SignInView ref="signInView" />
+  <SignInView ref="signInView" @refresh-header="refreshHeader" />
   <SignUpView ref="signUpView" />
 </template>
 
 <script setup lang="ts">
 import SignInView from "./SignInView.vue";
 import SignUpView from "./SignUpView.vue";
-import { ref } from "vue";
+import { nextTick, ref, onMounted } from "vue";
 import { useUserInfo } from "@/stores/counter.ts";
 import useLogin from '@/hooks/useLogin'
 import { removeToken } from "@/utils/token";
 import { useRouter } from 'vue-router';
+import type { UserInter } from '@/types/userInterface'
 const router = useRouter();
 let { isLogin } = useLogin()
 const rememberPwdStore = useUserInfo();
-
+const userName = ref<string>('')
 const signInView = ref();
 const signUpView = ref();
+onMounted(() => {
+  userName.value = rememberPwdStore.userInfo.email ? rememberPwdStore.userInfo.email[0] : ''
+})
 const signIn = function () {
   signInView.value.dialogVisible = true;
   if (rememberPwdStore.rememberPwd) {
@@ -51,11 +55,17 @@ const signUp = function () {
   signUpView.value.dialogVisible = true;
   if (signUpView.value.ruleFormRef) signUpView.value.ruleFormRef.resetFields()
 }
+const refreshHeader = function (user: UserInter) {
+  nextTick(() => {
+    userName.value = user.email[0]
+  })
+}
 const logOut = function () {
   rememberPwdStore.isLogin = false
   rememberPwdStore.token = ''
   removeToken()
   router.push('/guest');
+  location.reload();
 }
 </script>
 

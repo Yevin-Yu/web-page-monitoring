@@ -48,6 +48,12 @@ const menuList: MenuInter[] = [
     menuName: '项目管理',
     path: '/project-managementView',
     icon: 'Document',
+  },
+  {
+    menuId: '3',
+    menuName: '浏览记录',
+    path: '/browsing-history',
+    icon: 'Stopwatch',
   }
 ];
 const activeIndex = ref<string>('1')

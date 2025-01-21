@@ -3,6 +3,7 @@ import useLogin from "@/hooks/useLogin";
 import DatasetHome from "../views/HomeView/DatasetHome.vue";
 import WorkbenchView from "../views/Workbench/WorkbenchView.vue";
 import ProjectManagementView from "@/views/ProjectManagement/ProjectManagementView.vue";
+import BrowsingHistory from "@/views/BrowsingHistory/BrowsingHistoryView.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -20,6 +21,11 @@ const router = createRouter({
       path: "/project-managementView",
       name: "ProjectManagementView",
       component: ProjectManagementView,
+    },
+    {
+      path: "/browsing-history",
+      name: "BrowsingHistory",
+      component: BrowsingHistory,
     },
   ],
 });

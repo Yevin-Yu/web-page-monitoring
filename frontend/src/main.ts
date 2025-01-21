@@ -13,6 +13,7 @@ import {
   Menu as IconMenu,
   Location,
   Setting,
+  Stopwatch
 } from "@element-plus/icons-vue";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import dateFormatPlugin from './utils/dateFormatPlugin';
@@ -21,6 +22,7 @@ app.component("Document", Document);
 app.component("Menu", IconMenu);
 app.component("Setting", Setting);
 app.component("Location", Location);
+app.component("Stopwatch", Stopwatch);
 app.use(createPinia());
 app.use(ElementPlus, {
   locale: zhCn,

@@ -28,24 +28,15 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- <el-pagination v-model:current-page="currentPage" v-model:page-size="currentSize" :page-sizes="[10, 20, 50, 100]"
-      :size="size" :background="background" layout="total, sizes, prev, pager, next" :total="total"
-      @size-change="handleSizeChange" @current-change="handleCurrentChange" class="code-page" /> -->
   </div>
   <ApplyCodDialog ref="applyCodDialog" @refresh-list="getList" />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-// import type { ComponentSize } from 'element-plus'
 import ApplyCodDialog from './ApplyCodDialog.vue'
 import { getKeyCode, deleteKeyCode, editKeyCode } from '@/api/keyCode'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { KeyCodeInter } from '@/types/keyCodeInterface'
-// const currentPage = ref<number>(5)
-// const currentSize = ref<number>(10)
-// const size = ref<ComponentSize>('default')
-// const background = ref<boolean>(false)
-// const total = ref<number>(10000)
 const tableData = ref<KeyCodeInter[]>()
 const tableLoading = ref<boolean>(false)
 const applyCodDialog = ref()
@@ -115,12 +106,6 @@ const deleteCode = function (id: number) {
 
 
 getList()
-// const handleSizeChange = (val: number) => {
-//   console.log(`${val} items per page`)
-// }
-// const handleCurrentChange = (val: number) => {
-//   console.log(`current page: ${val}`)
-// }
 </script>
 <style lang="less" scoped>
 .project-manage {

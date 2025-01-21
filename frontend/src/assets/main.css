@@ -43,6 +43,12 @@
   --el-button-text-color: var(--cus-dark-light-text-color) !important;
   --el-button-hover-link-text-color:var(--cus-dark-light-bg) !important;
 }
+.el-form-item__label{
+  color: var(--cus-dark-light-text-color) !important;
+}
+.is-selected{
+  color: var(--cus-dark-light-text-color) !important;
+}
 .over-all-btn{
   background: url(@/assets/images/signbtn.png) no-repeat center;
   background-size: 100% 100%;
