@@ -13,26 +13,16 @@ export const useCounterStore = defineStore("counter", () => {
 });
 
 export const useUserInfo = defineStore("rememberPwd", () => {
-  const rememberPwd = ref<boolean>(false);
   const userInfo = ref<UserInter>({
     email: "",
-    password: "",
   });
   const token = getToken();
   const isLogin = ref<boolean>(token ? true : false);
-  function setUserInfo(info: UserInter, rememberPwd: boolean) {
-    window.localStorage.setItem("userInfo", JSON.stringify(info));
-    window.localStorage.setItem("rememberPwd", JSON.stringify(rememberPwd));
+  function setUserInfo(email: string) {
+    window.localStorage.setItem("userInfo", JSON.stringify(email));
   }
   function getUserInfo() {
-    const info = window.localStorage.getItem("userInfo");
-    const remember = window.localStorage.getItem("rememberPwd");
-    if (remember) {
-      if (info) {
-        userInfo.value = JSON.parse(info);
-      }
-      rememberPwd.value = JSON.parse(remember);
-    }
+    return window.localStorage.getItem("userInfo");
   }
-  return { rememberPwd, userInfo, token, isLogin, setUserInfo, getUserInfo };
+  return { userInfo, token, isLogin, setUserInfo, getUserInfo };
 });

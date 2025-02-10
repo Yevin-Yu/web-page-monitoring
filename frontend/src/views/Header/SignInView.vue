@@ -10,13 +10,6 @@
             <el-input placeholder="请输入密码" :prefix-icon="Password" show-password v-model="user.password"></el-input>
           </el-form-item>
         </el-form>
-        <div class="remember-pwd">
-          <div class="pwd-ckeckbox" @click="getRememberPwd">
-            <img src="../../assets/images/checkbox.png" alt="" class="checkbox-rect" />
-            <img src="../../assets/images/confirm.png" alt="" class="checkbox-confirm" v-if="isRememberPwd" />
-          </div>
-          <span>记住密码</span>
-        </div>
         <div class="sign-btn over-all-btn" @click="getSignIn" v-loading="loginLoading"
           element-loading-background="rgba(0,8,22, 0.8)">登&nbsp;&nbsp;录</div>
       </div>
@@ -29,7 +22,6 @@ import { ref, defineExpose, onMounted, watch } from "vue";
 import UserName from "@/assets/images/UserName.vue";
 import Password from "@/assets/images/Password.vue";
 import { useUserInfo } from "@/stores/counter.ts";
-import type { UserInter } from '@/types/userInterface'
 import { login } from '@/api/login'
 import { ElMessage } from 'element-plus'
 import { setToken } from "@/utils/token";
@@ -37,14 +29,10 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const userInfoStore = useUserInfo();
 const dialogVisible = ref(false);
-const user = ref<UserInter>({
+const user = ref({
   email: "",
   password: "",
 });
-const isRememberPwd = ref(false);
-const getRememberPwd = function () {
-  isRememberPwd.value = !isRememberPwd.value;
-};
 const loginLoading = ref<boolean>(false)
 const getSignIn = function () {
   loginLoading.value = true
@@ -57,8 +45,8 @@ const getSignIn = function () {
       userInfoStore.token = res.data.data.token
       userInfoStore.isLogin = true
       ElMessage.success('登录成功')
-      if (isRememberPwd.value) userInfoStore.setUserInfo(user.value, true)
-      emit('refresh-header',user.value)
+      userInfoStore.setUserInfo(user.value.email)
+      emit('refresh-header', user.value)
       router.push('/workbench');
     } else {
       userInfoStore.isLogin = false
@@ -74,19 +62,7 @@ const getSignIn = function () {
 const emit = defineEmits(['refresh-header'])
 onMounted(() => {
   userInfoStore.getUserInfo()
-  isRememberPwd.value = userInfoStore.rememberPwd
-  if (userInfoStore.rememberPwd) {
-    user.value.email = userInfoStore.userInfo.email;
-    user.value.password = userInfoStore.userInfo.password;
-  }
 });
-watch(isRememberPwd, (val) => {
-  if (val) {
-    userInfoStore.setUserInfo(user.value, true)
-  } else {
-    userInfoStore.setUserInfo({ email: '', password: '' }, false)
-  }
-})
 defineExpose({ dialogVisible, user });
 </script>
 
@@ -95,30 +71,6 @@ defineExpose({ dialogVisible, user });
   .sign-in-container {
     width: 250px;
     margin: 20px auto;
-
-    .remember-pwd {
-      display: flex;
-      justify-content: end;
-      align-items: center;
-
-      .pwd-ckeckbox {
-        position: relative;
-        cursor: pointer;
-
-        .checkbox-rect,
-        .checkbox-confirm {
-          position: absolute;
-          width: 12px;
-          top: -5px;
-          left: -20px;
-        }
-      }
-
-      span {
-        font-size: 12px;
-        color: #00fcff;
-      }
-    }
 
     .sign-btn {
       width: 180px;

@@ -39,17 +39,11 @@ const userName = ref<string>('')
 const signInView = ref();
 const signUpView = ref();
 onMounted(() => {
-  userName.value = rememberPwdStore.userInfo.email ? rememberPwdStore.userInfo.email[0] : ''
+  let email = JSON.parse(rememberPwdStore.getUserInfo() || '')
+  userName.value = rememberPwdStore.getUserInfo() ? email[0] : ''
 })
 const signIn = function () {
   signInView.value.dialogVisible = true;
-  if (rememberPwdStore.rememberPwd) {
-    signInView.value.user.email = rememberPwdStore.userInfo.email;
-    signInView.value.user.password = rememberPwdStore.userInfo.password;
-  } else {
-    signInView.value.user.email = "";
-    signInView.value.user.password = "";
-  }
 };
 const signUp = function () {
   signUpView.value.dialogVisible = true;
