@@ -4,6 +4,15 @@
     <div class="his-line">
       <LineHisView />
     </div>
+    <div class="pie-chart">
+      <ThreeDPieView />
+    </div>
+    <div class="read-book-view">
+      <ReadBookView />
+    </div>
+    <div class="rader-view">
+      <RaderView />
+    </div>
   </div>
 
 </template>
@@ -11,6 +20,9 @@
 import AMapLoader from '@amap/amap-jsapi-loader';
 import { ref, onMounted } from 'vue'
 import LineHisView from './LineHisView.vue';
+import ThreeDPieView from './ThreeDPieView.vue';
+import ReadBookView from './ReadBookView.vue';
+import RaderView from './RaderView.vue';
 const initMap = () => {
   AMapLoader.load({
     key: "a746947369b56c4abbadd27235900e86",
@@ -46,7 +58,7 @@ const initMap = () => {
     var style = {
       radius: 3.5,
       unit: 'px',
-      color: '#3C1FA8',
+      color: '#40E2F7',
       borderWidth: 0,
       blurWidth: 3.5,
     }
@@ -88,8 +100,29 @@ onMounted(() => {
     position: absolute;
     top: 10px;
     left: 10px;
-    width: 500px;
-    height: 300px;
+    width: 40%;
+    height: 45%;
+  }
+  .pie-chart{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 40%;
+    height: 45%;
+  }
+  .read-book-view{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40%;
+    height: 45%;
+  }
+  .rader-view{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 40%;
+    height: 45%;
   }
 }
 </style>

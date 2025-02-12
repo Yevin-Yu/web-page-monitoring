@@ -3,12 +3,13 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import * as echarts from 'echarts';
 const linHisChart = ref()
+let myChart
 const init = function () {
   if (linHisChart.value) {
-    const myChart = echarts.init(linHisChart.value);
+    myChart = echarts.init(linHisChart.value);
     let option = {
       tooltip: {
         trigger: 'axis',
@@ -100,8 +101,8 @@ const init = function () {
             }
           },
           data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2],
-          itemStyle:{
-            color:'#1BD4E7'
+          itemStyle: {
+            color: '#1BD4E7'
           }
         }
       ]
@@ -109,9 +110,22 @@ const init = function () {
     myChart.setOption(option);
   }
 }
+const resizeChart = () => {
+  if (myChart) {
+    myChart.resize();
+  }
+};
+
 onMounted(() => {
   init()
+  window.addEventListener('resize', resizeChart);
 })
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', resizeChart);
+  if (myChart) {
+    myChart.dispose(); // 销毁图表实例，释放资源
+  }
+});
 </script>
 <style lang="less" scoped>
 .line-his-chart {
